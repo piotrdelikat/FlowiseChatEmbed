@@ -29,6 +29,7 @@ export type MessageType = {
 export type BotProps = {
   chatflowid: string;
   apiHost?: string;
+  callback: (data: any) => void;
   chatflowConfig?: Record<string, unknown>;
   welcomeMessage?: string;
   botMessage?: BotMessageTheme;
@@ -230,6 +231,7 @@ export const Bot = (props: BotProps & { class?: string }) => {
 
     if (data) {
       console.log('data', data);
+      props.callback(data);
       if (typeof data === 'object' && data.text && data.sourceDocuments) {
         if (!isChatFlowAvailableToStream()) {
           setMessages((prevMessages) => [
