@@ -18,6 +18,11 @@ export type BotProps = {
     badgeBackgroundColor?: string;
     fontSize?: number;
 };
+declare global {
+    interface Window {
+        vscode: any;
+    }
+}
 export declare const Bot: (props: BotProps & {
     class?: string;
 }) => import("solid-js").JSX.Element;

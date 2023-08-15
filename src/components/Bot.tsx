@@ -119,6 +119,12 @@ const defaultWelcomeMessage = 'Hi there! What would you like me to build?';
     },
 ]*/
 
+declare global {
+  interface Window {
+    vscode: any;
+  }
+}
+
 export const Bot = (props: BotProps & { class?: string }) => {
   let chatContainer: HTMLDivElement | undefined;
   let bottomSpacer: HTMLDivElement | undefined;
@@ -231,6 +237,11 @@ export const Bot = (props: BotProps & { class?: string }) => {
 
     if (data) {
       console.log('data', data);
+      (window as Window).vscode &&
+        (window as Window).vscode.postMessage({
+          command: 'answer',
+          data: data,
+        });
       props.callback(data);
       if (typeof data === 'object' && data.text && data.sourceDocuments) {
         if (!isChatFlowAvailableToStream()) {
